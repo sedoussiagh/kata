@@ -10,12 +10,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -36,14 +36,14 @@ public class DeliveryController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/delivery-methods")
-    public EntityModel<List<DeliveryMethod>> getDeliveryMethods() {
+    public CollectionModel<DeliveryMethod> getDeliveryMethods() {
         List<DeliveryMethod> methods = deliveryService.getAvailableMethods();
 
         // Add self link to the response
         Link selfLink = linkTo(methodOn(DeliveryController.class).getDeliveryMethods()).withSelfRel();
 
         // Return the methods wrapped in an EntityModel with the link
-        return EntityModel.of(methods, selfLink);
+        return CollectionModel.of(methods, selfLink);
     }
 
     @Operation(summary = "Get available time slots", description = "Returns a list of available time slots for a given delivery method. The slots depend on the delivery type and availability.")
