@@ -53,7 +53,7 @@ public class DeliveryController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/time-slots")
-    public EntityModel<List<TimeSlot>> getAvailableTimeSlots(
+    public CollectionModel<TimeSlot> getAvailableTimeSlots(
             @Parameter(description = "The delivery method to retrieve time slots for", example = "DELIVERY")
             @RequestParam DeliveryMethod method) {
         List<TimeSlot> timeSlots = deliveryService.getAvailableTimeSlots(method);
@@ -66,7 +66,7 @@ public class DeliveryController {
                 ))
                 .toList();
 
-        return EntityModel.of(timeSlots, selfLink);    }
+        return CollectionModel.of(timeSlots, selfLink);    }
 
     @Operation(summary = "Book a delivery", description = "Books a delivery for a customer with a specified delivery method and time slot.")
     @ApiResponses(value = {

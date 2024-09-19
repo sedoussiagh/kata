@@ -29,6 +29,20 @@ services:
     networks:
       - my_network
 
+  app:
+    image: driveanddeliver-app:cloud
+    container_name: driveanddeliver-app
+    build:
+      context: .
+    environment:
+      SPRING_PROFILES_ACTIVE: cloud
+    ports:
+      - "8090:8090"
+    depends_on:
+      - postgres
+    networks:
+      - my_network
+
 networks:
   my_network:
     driver: bridge

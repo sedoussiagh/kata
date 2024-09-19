@@ -65,7 +65,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.6.0</version> <!-- or the latest version -->
+			<version>42.6.0</version>
 		</dependency>
 	</dependencies>
 
@@ -78,4 +78,23 @@
 		</plugins>
 	</build>
 
+	<profiles>
+
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>local</spring.profiles.active>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>cloud</id>
+			<properties>
+				<spring.profiles.active>cloud</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
 </project>
